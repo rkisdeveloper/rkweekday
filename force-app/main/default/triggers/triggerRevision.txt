@@ -1,0 +1,62 @@
+All trigger context variables studied till date
+
+- Trigger.isBefore
+- Trigger.isAfter
+- Trigger.isInsert
+- Trigger.isUpdate
+- Trigger.isDelete
+- Trigger.isUndelete
+
+- Trigger.New
+    - Newly inserted or updated records
+    - datatype of trigger.new?
+        - list<sObject> -> sObject will depend on trigger
+    - Available in before insert ?
+        - Yes. ID is null. CreatedDate, CreatedBy and other system fields are also NULL.
+            - why id is null?
+                - ID is null because record is NOT YET created.
+    - Available in after insert?
+        - Yes. Id is present. Record is created.
+    - Available in before update and after update?
+        - Yes. 
+            Field values are same or different?
+                - All standard and custom fields values is same for trigger.new in before and after update. BUT some of the system fields might be different, ex: last modified date
+- Trigger.Old
+    - Datatype of trigger.old?
+        - list<sObject>
+    - Old snapshot, immediate previous data
+    - Available in before insert and after insert?
+        - NOT available. It is NULL
+        - if record is brand new what is gonna be trigger.old?
+            - Null
+    - Available in before update and after update?
+        - Yes.
+        - Same values of trigger.old in before update and after update?
+            - Same.
+   
+- Trigger.NewMap
+    - map<id, sObject>
+    - newly inserted or updated record.
+    - Available in which Events? 
+        - after insert. NOT available in before insert. Why? Bcz no id.
+        - before update, after update?
+            - yes.
+
+- Trigger.OldMap
+    - map<id, sobject>.
+    - previous version of updated record.
+    - Available in which events?
+        - Before update,after update, before delete, after delete
+
+//how can we check if we have update ONE particular field?
+    //trigger.isUpdate
+        // old record field value != new record field value
+        Req: 
+    if joining date is blank, then set joining date to today's date.
+
+Object? employee__c
+event? before insert or before update or after insert or after update?
+    //before update
+    //before insert
+
+We want to update same record record which we are inserting/updating: WE DO IT IN BEFORE TRIGGER.
